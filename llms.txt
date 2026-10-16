@@ -1,0 +1,15 @@
+# llama-index-tools-topk
+
+> Search and long-term memory tools for LlamaIndex agents, backed by TopK. `TopKToolSpec` gives a FunctionAgent `keyword_search` (BM25, exact codes/IDs), `semantic_search` (paraphrases) and `hybrid_search` (both in one query) with metadata filters. `TopKMemoryToolSpec` gives `remember`/`recall`/`forget` in an isolated TopK partition per user. `TopKMemoryBlock` is a BaseMemoryBlock for LlamaIndex `Memory`.
+
+- Install: `pip install llama-index-tools-topk` (pulls in llama-index-vector-stores-topk); env: `TOPK_API_KEY`, `TOPK_REGION`
+- Search tools: `TopKToolSpec(TopKVectorStore(collection_name="docs"), corpus_description=..., metadata_fields={...}).to_tool_list()`
+- Filters the agent writes: `{"topic": "payments", "year": {"$gte": 2024}}` ($eq $ne $gt $gte $lt $lte $in $nin $contains, dotted keys)
+- Memory tools: `TopKMemoryToolSpec(store, user_id="user-42").to_tool_list()`; memory block: `Memory.from_defaults(memory_blocks=[TopKMemoryBlock(vector_store=store, user_id="user-42")])`
+- Bring your own embeddings: `TopKVectorStore(..., server_side_embeddings=False)` plus `embed_model=` on the tool spec or block
+
+## Docs
+
+- [README](https://github.com/topk-io/llama-index-tools-topk#readme)
+- [Example notebook](https://github.com/topk-io/llama-index-tools-topk/blob/main/examples/topk_agent_tools.ipynb)
+- [Vector store package](https://github.com/topk-io/llama-index-vector-stores-topk)

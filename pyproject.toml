@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llama-index-tools-topk"
+version = "0.1.0"
+description = "TopK search and long-term memory tools for LlamaIndex agents: keyword (BM25), semantic and hybrid search tools, remember/recall per user, and a TopK memory block."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10,<4.0"
+authors = [{ name = "TopK Team", email = "support@topk.io" }]
+keywords = [
+  "llama-index", "llamaindex", "topk", "agent tools", "tool spec", "agent memory", "long-term memory",
+  "hybrid search", "bm25", "keyword search", "semantic search", "function calling", "rag", "multi-tenant",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["llama-index-core>=0.13.0,<0.15", "llama-index-vector-stores-topk>=0.1.0"]
+
+[project.urls]
+Homepage = "https://topk.io"
+Repository = "https://github.com/topk-io/llama-index-tools-topk"
+Issues = "https://github.com/topk-io/llama-index-tools-topk/issues"
+
+[dependency-groups]
+test = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.6", "llama-index-llms-anthropic>=0.10"]
+
+[tool.hatch.build.targets.sdist]
+include = ["llama_index/", "README.md", "LICENSE", "llms.txt"]
+
+[tool.hatch.build.targets.wheel]
+include = ["llama_index/"]
+
+[tool.llamahub]
+contains_example = false
+import_path = "llama_index.tools.topk"
+
+[tool.llamahub.class_authors]
+TopKToolSpec = "topk-io"
+TopKMemoryToolSpec = "topk-io"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = ["integration: needs TOPK_API_KEY and TOPK_REGION", "agent: also needs ANTHROPIC_API_KEY"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
